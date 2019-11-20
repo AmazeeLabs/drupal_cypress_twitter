@@ -1,0 +1,4 @@
+name: 'Drupal Cypress Twitter Example'
+type: module
+description: 'Cypress example module'
+core: 8.x
