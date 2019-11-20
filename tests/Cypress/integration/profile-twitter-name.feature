@@ -3,6 +3,7 @@ Feature: Twitter name on user profiles
   I want to link my profile page to my Twitter account
   So visitors don't have to search me on Twitter and are more likely to follow.
 
+  @focus
   Scenario: Add twitter account to profile
     Given the user is authenticated
     And the user is viewing the profile edit mask
