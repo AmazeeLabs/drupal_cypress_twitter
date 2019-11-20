@@ -5,17 +5,15 @@ Feature: Twitter name on user profiles
 
   Scenario: Add twitter account to profile
     Given the user is authenticated
-    And the user visits "/user"
-    And the user clicks on the "Edit" tab
-    When the user enters "@pmelab" into the field "#field-twitter"
-    And the user clicks the "#submit" button
-    Then the user the user account is successfully saved
+    And the user is viewing the profile edit mask
+    When the user enters "@pmelab" into the field labeled "Twitter"
+    And the user saves the profile
+    Then a success message is displayed
 
   Scenario: Display twitter link on profile
     Given the user is authenticated
-    And the user visits "/user"
-    And the user clicks on the "Edit" tab
-    When the user enters "@pmelab" into the field "#field-twitter"
-    And the user clicks the "#submit" button
-    And the user visists "/user"
-    Then user sees a link with title "@pmelab" and href "https://twitter.com/pmelab"
+    And the user is editing viewing the profile edit mask
+    When the user enters "@pmelab" into the field labeled "Twitter"
+    And the user saves the profile
+    And the user is viewing the profile
+    Then there is the text "@pmelab" linked to the "@pmelab" twitter account
