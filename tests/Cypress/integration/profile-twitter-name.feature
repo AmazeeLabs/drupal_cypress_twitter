@@ -4,10 +4,7 @@ Feature: Twitter name on user profiles
   So visitors don't have to search me on Twitter and are more likely to follow.
 
   Scenario: Add twitter account to profile and display it
-    Given the user visits "/user/login"
-    And the user enters "admin" into the field "#username"
-    And the user enters "admin" into the field "#password"
-    And the user clicks the "#submit" button
+    Given the user is authenticated
     And the user visits "/user"
     And the user clicks on the "Edit" tab
     When the user enters "@pmelab" into the field "#field-twitter"
