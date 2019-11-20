@@ -10,6 +10,13 @@ Feature: Twitter name on user profiles
     And the user saves the profile
     Then a success message is displayed
 
+  Scenario: Add invalid twitter account to profile
+    Given the user is authenticated
+    And the user is viewing the profile edit mask
+    When the user enters "pmelab@" into the field labeled "Twitter"
+    And the user saves the profile
+    Then an error message is displayed
+
   Scenario: Display twitter link on profile
     Given the user is not authenticated
     And there is a user with name "pmelab" and twitter account "@pmelab"
