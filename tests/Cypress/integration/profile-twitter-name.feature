@@ -11,9 +11,7 @@ Feature: Twitter name on user profiles
     Then a success message is displayed
 
   Scenario: Display twitter link on profile
-    Given the user is authenticated
-    And the user is editing viewing the profile edit mask
-    When the user enters "@pmelab" into the field labeled "Twitter"
-    And the user saves the profile
-    And the user is viewing the profile
+    Given the user is not authenticated
+    And there is a user with name "pmelab" and twitter account "@pmelab"
+    When the user is viewing the profile of "pmelab"
     Then there is the text "@pmelab" linked to the "@pmelab" twitter account
