@@ -1,8 +1,12 @@
 <?php
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_entity_base_field_info_alter().
@@ -41,5 +45,23 @@ function drupal_cypress_twitter_name_validate(&$form, FormStateInterface $formSt
   $twitterName = $formState->getValue(['twitter', 0, 'value']);
   if (!preg_match('/@[A-Za-z_]+/', $twitterName)) {
     $formState->setError($form['twitter'], 'Invalid twitter name.');
+  }
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function drupal_cypress_twitter_entity_view_alter(
+  array &$build,
+  EntityInterface $entity,
+  EntityViewDisplayInterface $display
+) {
+  if ($entity->getEntityTypeId() === 'user') {
+    if ($name = $entity->twitter->value) {
+      $build['twitter'][0]['#context']['value'] = Link::fromTextAndUrl(
+        $name,
+        Url::fromUri('https://www.twitter.com/' . substr($name, 1))
+      )->toString();
+    }
   }
 }

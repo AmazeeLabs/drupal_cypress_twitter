@@ -33,3 +33,26 @@ Then(/^a success message is displayed$/, function () {
 Then(/^an error message is displayed$/, function () {
   cy.get('.messages').contains('Invalid twitter name.');
 });
+
+// Given the user is not authenticated
+Given(/^the user is not authenticated$/, function () {
+  // Grant anonymous users access to profiles. This should be done on project
+  // configuration level directly, so we do it manually during the test run.
+  cy.drupalScript('drupal_cypress_twitter:integration/profile-twitter-name/grant-access.php');
+});
+
+// And there is a user with name "pmelab" and twitter account "@pmelab"
+Given(/^there is a user with name "pmelab" and twitter account "@pmelab"$/, function () {
+  cy.drupalScript('drupal_cypress_twitter:integration/profile-twitter-name/create-pmelab.php');
+});
+
+
+// When the user is viewing the profile of "pmelab"
+When(/^the user is viewing the profile of "([^"]*)"$/, function (name) {
+  cy.drupalVisitEntity('user', {name});
+});
+
+// Then there is the text "@pmelab" linked to the "@pmelab" twitter account
+Then(/^there is the text "([^"]*)" linked to the "([^"]*)" twitter account$/, function (handle) {
+  cy.get('a').contains(handle).should('have.attr', 'href', `https://www.twitter.com/${handle.substr(1)}`);
+});

@@ -10,7 +10,6 @@ Feature: Twitter name on user profiles
     And the user saves the profile
     Then a success message is displayed
 
-  @focus
   Scenario: Add invalid twitter account to profile
     Given the user is authenticated
     And the user is viewing the profile edit mask
