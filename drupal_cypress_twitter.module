@@ -2,6 +2,7 @@
 
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_entity_base_field_info_alter().
@@ -24,4 +25,21 @@ function drupal_cypress_twitter_entity_base_field_info(EntityTypeInterface $enti
       ->setDisplayConfigurable('form', TRUE);
   }
   return $fields;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function drupal_cypress_twitter_form_user_form_alter(&$form) {
+  $form['#validate'][] = 'drupal_cypress_twitter_name_validate';
+}
+
+/**
+ * Validation hook for twitter names.
+ */
+function drupal_cypress_twitter_name_validate(&$form, FormStateInterface $formState) {
+  $twitterName = $formState->getValue(['twitter', 0, 'value']);
+  if (!preg_match('/@[A-Za-z_]+/', $twitterName)) {
+    $formState->setError($form['twitter'], 'Invalid twitter name.');
+  }
 }

@@ -28,3 +28,8 @@ And(/^the user saves the profile$/, function () {
 Then(/^a success message is displayed$/, function () {
   cy.get('.messages').contains('The changes have been saved.');
 });
+
+// Then a success message is displayed
+Then(/^an error message is displayed$/, function () {
+  cy.get('.messages').contains('Invalid twitter name.');
+});
